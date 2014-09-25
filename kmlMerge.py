@@ -15,9 +15,9 @@ class XMLCombiner(object):
         self.roots = [t.getroot() for t in self.trees]
 
     def combine(self):
-        rootcoordinate = self.roots[0].findall(".//{http://earth.google.com/kml/2.0}coordinates")
+        rootcoordinate = self.roots[0].findall(".//{"+NAMESPACE+"}coordinates")
         for r in self.trees[1:]:
-            othercoordinate = r.findall(".//{http://earth.google.com/kml/2.0}coordinates")
+            othercoordinate = r.findall(".//{"+NAMESPACE+"}coordinates")
             newcoordinate = str(rootcoordinate[0].text) + str(othercoordinate[0].text)
             filtered = "\n".join([ll.rstrip() for ll in newcoordinate.splitlines() if ll.strip()])
             rootcoordinate[0].text = str(filtered)
